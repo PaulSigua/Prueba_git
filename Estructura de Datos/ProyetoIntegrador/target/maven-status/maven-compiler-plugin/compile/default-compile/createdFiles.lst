@@ -1,0 +1,9 @@
+controlador\ControladorHisotrial.class
+modelo\Historial.class
+Vista\VistaCliente.class
+modelo\Cliente.class
+controlador\ControladorAtencionCliente.class
+modelo\Cita.class
+Main\Main.class
+modelo\Ventanilla.class
+controlador\ControladorCliente.class

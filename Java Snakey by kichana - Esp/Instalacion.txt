@@ -1,0 +1,23 @@
+Gracias por descargar JavaSnakey!
+
+-------------------------------------------------------------------------
+
+Para poder jugarlo solamente vas a necesitar instalar JAVA 11 en tu ordenador.
+Si tenes *windows 10 64bit*, podes descargar el instalador con este link: https://drive.google.com/file/d/1V6YYJ0pPGLxYSrYA_AHJjIz09dgGvTgQ/view?usp=sharing
+
+De lo contrario, descargate e instalate java 11 por internet.
+
+>> Una vez instalado java 11 simplemente le das doble click a JavaSnakey o JavaSnakey.jar y deberia ejecutarse el juego!
+
+-------------------------------------------------------------------------
+
+Cualquier cosita si no funciona o si tienen preguntas se pueden contactar a mi mail
+choi.david4@gmail.com 
+
+O se unen al grupo de telegram y podemos solucionarlo mas rápido 
+https://t.me/joinchat/lrHpRxfYpvg0OTkx
+
+-------------------------------------------------------------------------
+
+En mi canal de youtube esta el video de como arme este juego asi que vayan a chequearlo!
+https://youtube.com/c/kichana

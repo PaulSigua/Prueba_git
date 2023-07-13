@@ -1,0 +1,608 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
+ */
+package ec.edu.ups.vista;
+
+import ec.edu.ups.controlador.ControladorFacturaCab;
+import ec.edu.ups.controlador.ControladorFacturaDet;
+import ec.edu.ups.controlador.ControladorPersona;
+import ec.edu.ups.controlador.ControladorServicio;
+import ec.edu.ups.controlador.CreacionPDF;
+import ec.edu.ups.modelo.Det_Fac_Servicio;
+import ec.edu.ups.modelo.Factura_Cabecera;
+import ec.edu.ups.modelo.Factura_Detalle;
+
+import ec.edu.ups.modelo.Persona;
+import ec.edu.ups.modelo.Servicio;
+import ec.edu.ups.modelo.Usuario;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+
+/**
+ *
+ * @author guama
+ */
+public class Vent_Facturar1 extends javax.swing.JInternalFrame {
+
+    private ControladorPersona controladorPersona;
+    private ControladorServicio controladorServicio;
+    private ControladorFacturaCab controladorFacturaCab;
+    private ControladorFacturaDet controladorFacturaDet;
+    private Persona clienteSeleccionado;
+    private Servicio servicioSeleccionado;
+    private Det_Fac_Servicio detalleServicioSeleccionado;
+    private List<Det_Fac_Servicio> carrito;
+
+    private boolean procesandoEvento = false;
+
+    /**
+     * Creates new form Vent_Facturar1
+     */
+    public Vent_Facturar1() {
+        initComponents();
+        Date fechaActual = new Date();
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        lbl_fechaActual.setText(formato.format(fechaActual));
+        
+
+        carrito = new ArrayList<>();
+        tabla_Servicios.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent event) {
+                // obtener la fila seleccionada
+                if (!procesandoEvento) {
+                    procesandoEvento = true;
+                    int filaSeleccionada = tabla_Servicios.getSelectedRow();
+                    System.out.println("Fila seleccionada: " + filaSeleccionada);
+                    if (filaSeleccionada != -1) {
+                        System.out.println("Detalle Servicio seleccionad: " + carrito.get(filaSeleccionada).toString());
+                        detalleServicioSeleccionado = carrito.get(filaSeleccionada);
+                    }
+                    procesandoEvento = false;
+                }
+            }
+        });
+    }
+
+    public void resetear() {
+        Date fechaActual = new Date();
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        lbl_fechaActual.setText(formato.format(fechaActual));
+        lbl_Usuario.setText(Menu_Principal.instance.getArreglo()[0]);
+        carrito = new ArrayList<>();
+        lbl_NumFac.setText("" + controladorFacturaCab.numeroFactura());
+        clienteSeleccionado = null;
+        servicioSeleccionado = null;
+        detalleServicioSeleccionado = null;
+        actulizarValores();
+        lbl_cedula.setText("9999999999");
+        lbl_nombre_Cliente.setText("Nombre");
+        lbl_correo.setText("example@gmail.com");
+    }
+
+    public void setControladorPersona(ControladorPersona controladorPersona) {
+        this.controladorPersona = controladorPersona;
+        lbl_Usuario.setText(Menu_Principal.instance.getArreglo()[0]);
+    }
+
+    public void setControladorServicio(ControladorServicio controladorServicio) {
+        this.controladorServicio = controladorServicio;
+    }
+
+    public void setControladorFacturaCab(ControladorFacturaCab controladorFacturaCab) {
+        this.controladorFacturaCab = controladorFacturaCab;
+        lbl_NumFac.setText("" + controladorFacturaCab.numeroFactura());
+    }
+
+    public void setControladorFacturaDet(ControladorFacturaDet controladorFacturaDet) {
+        this.controladorFacturaDet = controladorFacturaDet;
+    }
+
+    public void setClienteSeleccionado(Persona clienteSeleccionado) {
+        this.clienteSeleccionado = clienteSeleccionado;
+        lbl_cedula.setText(clienteSeleccionado.getCedula());
+        lbl_nombre_Cliente.setText(clienteSeleccionado.getNombre());
+        lbl_correo.setText(clienteSeleccionado.getCorreo());
+
+    }
+
+    public void setServicioSeleccionado(Servicio servicioSeleccionado) {
+        this.servicioSeleccionado = servicioSeleccionado;
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jPanel1 = new javax.swing.JPanel();
+        jLabel13 = new javax.swing.JLabel();
+        lbl_NumFac = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        lbl_correo = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        lbl_cedula = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        lbl_nombre_Cliente = new javax.swing.JTextField();
+        btn_Buscar_Personal = new javax.swing.JButton();
+        btn_CrearFactura = new javax.swing.JButton();
+        btn_Agregar1 = new javax.swing.JButton();
+        btn_Agregar = new javax.swing.JButton();
+        btn_Cancelar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tabla_Servicios = new javax.swing.JTable();
+        lbl_fechaActual = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        lbl_Usuario = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        lbl_facSubtotal = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        lbl_facTotal = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        lbl_facIva = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+
+        setClosable(true);
+
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel13.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(29, 64, 97));
+        jLabel13.setText("#Factura:");
+        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 150, -1, 30));
+
+        lbl_NumFac.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        lbl_NumFac.setForeground(new java.awt.Color(29, 64, 97));
+        lbl_NumFac.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        lbl_NumFac.setText("#####");
+        lbl_NumFac.setEnabled(false);
+        jPanel1.add(lbl_NumFac, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 150, 100, -1));
+
+        jLabel11.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(29, 64, 97));
+        jLabel11.setText("Correo Cliente:");
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 230, -1, 30));
+
+        lbl_correo.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        lbl_correo.setForeground(new java.awt.Color(29, 64, 97));
+        lbl_correo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        lbl_correo.setText("example@gmail.com");
+        lbl_correo.setEnabled(false);
+        lbl_correo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lbl_correoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(lbl_correo, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 230, 230, 30));
+
+        jLabel10.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(29, 64, 97));
+        jLabel10.setText("Cedula Cliente:");
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 230, -1, 30));
+
+        lbl_cedula.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        lbl_cedula.setForeground(new java.awt.Color(29, 64, 97));
+        lbl_cedula.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        lbl_cedula.setText("9999999999");
+        lbl_cedula.setEnabled(false);
+        lbl_cedula.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lbl_cedulaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(lbl_cedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 230, 160, -1));
+
+        jLabel9.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(29, 64, 97));
+        jLabel9.setText("Nombre Cliente:");
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 230, -1, 30));
+
+        lbl_nombre_Cliente.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        lbl_nombre_Cliente.setForeground(new java.awt.Color(29, 64, 97));
+        lbl_nombre_Cliente.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        lbl_nombre_Cliente.setText("Nombre");
+        lbl_nombre_Cliente.setEnabled(false);
+        jPanel1.add(lbl_nombre_Cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 230, 230, -1));
+
+        btn_Buscar_Personal.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
+        btn_Buscar_Personal.setForeground(new java.awt.Color(29, 64, 97));
+        btn_Buscar_Personal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ec/edu/ups/imagenes/icons8_search_client_25px.png"))); // NOI18N
+        btn_Buscar_Personal.setText("SELECCIONE AL CLIENTE");
+        btn_Buscar_Personal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_Buscar_PersonalActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_Buscar_Personal, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 150, 230, 30));
+
+        btn_CrearFactura.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
+        btn_CrearFactura.setForeground(new java.awt.Color(29, 64, 97));
+        btn_CrearFactura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ec/edu/ups/imagenes/icons8_Checkmark_50px.png"))); // NOI18N
+        btn_CrearFactura.setText("CONFIRMAR FACTURA");
+        btn_CrearFactura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_CrearFacturaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_CrearFactura, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 650, 250, 50));
+
+        btn_Agregar1.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
+        btn_Agregar1.setForeground(new java.awt.Color(29, 64, 97));
+        btn_Agregar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ec/edu/ups/imagenes/icons8_erase_30px.png"))); // NOI18N
+        btn_Agregar1.setText("ELIMINAR SERVICIO");
+        btn_Agregar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_Agregar1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_Agregar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 290, 180, 40));
+
+        btn_Agregar.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
+        btn_Agregar.setForeground(new java.awt.Color(29, 64, 97));
+        btn_Agregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ec/edu/ups/imagenes/icons8_add_30px.png"))); // NOI18N
+        btn_Agregar.setText("AGREGAR SERVICIO");
+        btn_Agregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_AgregarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_Agregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 290, 180, 40));
+
+        btn_Cancelar.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
+        btn_Cancelar.setForeground(new java.awt.Color(29, 64, 97));
+        btn_Cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ec/edu/ups/imagenes/icons8_cancel_50px.png"))); // NOI18N
+        btn_Cancelar.setText("CANCELAR FACTURA");
+        btn_Cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_CancelarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_Cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 650, 250, 50));
+
+        tabla_Servicios.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Id", "Servicio", "Precio", "Cantidad", "Iva", "Subtotal", "Total"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tabla_Servicios);
+        if (tabla_Servicios.getColumnModel().getColumnCount() > 0) {
+            tabla_Servicios.getColumnModel().getColumn(0).setPreferredWidth(1);
+        }
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 340, 1190, 250));
+
+        lbl_fechaActual.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        lbl_fechaActual.setForeground(new java.awt.Color(29, 64, 97));
+        lbl_fechaActual.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        lbl_fechaActual.setText("00/00/2022");
+        lbl_fechaActual.setEnabled(false);
+        jPanel1.add(lbl_fechaActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 150, 120, -1));
+
+        jLabel4.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(29, 64, 97));
+        jLabel4.setText("Fecha:");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 150, -1, 30));
+
+        jLabel5.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(29, 64, 97));
+        jLabel5.setText("Factura Realizada por:");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 150, -1, 30));
+
+        lbl_Usuario.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        lbl_Usuario.setForeground(new java.awt.Color(29, 64, 97));
+        lbl_Usuario.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        lbl_Usuario.setText("Usuario1");
+        lbl_Usuario.setEnabled(false);
+        jPanel1.add(lbl_Usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 150, 150, -1));
+
+        jLabel6.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(29, 64, 97));
+        jLabel6.setText("Subtotal:");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 610, -1, 30));
+
+        lbl_facSubtotal.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        lbl_facSubtotal.setForeground(new java.awt.Color(29, 64, 97));
+        lbl_facSubtotal.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        lbl_facSubtotal.setText("$ 0.00");
+        lbl_facSubtotal.setEnabled(false);
+        jPanel1.add(lbl_facSubtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 610, 100, -1));
+
+        jLabel7.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(29, 64, 97));
+        jLabel7.setText("Total:");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 610, -1, 30));
+
+        lbl_facTotal.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        lbl_facTotal.setForeground(new java.awt.Color(29, 64, 97));
+        lbl_facTotal.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        lbl_facTotal.setText("$ 0.00");
+        lbl_facTotal.setEnabled(false);
+        jPanel1.add(lbl_facTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(1140, 610, 100, -1));
+
+        jLabel8.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(29, 64, 97));
+        jLabel8.setText("IVA:");
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 610, -1, 30));
+
+        lbl_facIva.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        lbl_facIva.setForeground(new java.awt.Color(29, 64, 97));
+        lbl_facIva.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        lbl_facIva.setText("$ 0.00");
+        lbl_facIva.setEnabled(false);
+        jPanel1.add(lbl_facIva, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 610, 100, -1));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ec/edu/ups/imagenes/Facturar.png"))); // NOI18N
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 720));
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_Buscar_PersonalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Buscar_PersonalActionPerformed
+        Seleccionar_Cliente sC = new Seleccionar_Cliente();
+        sC.setVent_Facturar1(this);
+        sC.setControladorPersona(this.controladorPersona);
+        sC.actulizarTabla();
+        sC.setVisible(true);
+    }//GEN-LAST:event_btn_Buscar_PersonalActionPerformed
+
+    private void btn_CrearFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_CrearFacturaActionPerformed
+        if (clienteSeleccionado == null) {
+            JOptionPane.showMessageDialog(null, "Seleccione un Cliente");
+        } else if (carrito.isEmpty() || carrito == null) {
+            JOptionPane.showMessageDialog(null, "Agregue servicios");
+        } else {
+            Usuario user = Menu_Principal.instance.getUsuarioSeleccionaado();
+            Calendar fecha = Calendar.getInstance();
+            double valores[] = actulizarValores();
+            Factura_Cabecera facCab = new Factura_Cabecera(0, clienteSeleccionado.getId(), user.getId(), fecha, valores[1], valores[0], valores[2], 'S');
+            this.controladorFacturaCab.crearFactura(facCab);
+
+            List<Factura_Detalle> detalles = new ArrayList<>();
+            for (Det_Fac_Servicio car : carrito) {
+                Factura_Detalle fDet = new Factura_Detalle();
+                fDet.setId(0);
+                fDet.setCantidad(car.getCantidad());
+                fDet.setPrecio_unitario(car.getPrecio());
+                fDet.setSubtotal(car.getSubtotal());
+                fDet.setValor_iva(car.getIva());
+                fDet.setTotal(car.getTotal());
+                fDet.setFac_id(controladorFacturaCab.numeroFactura() - 1);
+                fDet.setSer_id(car.getId());
+                detalles.add(fDet);
+            }
+
+            this.controladorFacturaDet.registrarDetalles(detalles);
+
+            CreacionPDF cPdf = new CreacionPDF();
+            try {
+                cPdf.crearFacturaPdf(facCab, detalles,"");
+            } catch (IOException ex) {
+                Logger.getLogger(Vent_Facturar1.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            resetear();
+            actualizarTabla();
+
+        }
+
+    }//GEN-LAST:event_btn_CrearFacturaActionPerformed
+
+    private void btn_Agregar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Agregar1ActionPerformed
+        if (servicioSeleccionado != null) {
+            int result = JOptionPane.showOptionDialog(null, "¿Desea eliminar?", "Confirmación",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+
+            if (result == JOptionPane.OK_OPTION) {
+                carrito.remove(detalleServicioSeleccionado);
+                actulizarValores();
+                actualizarTabla();
+            } else if (result == JOptionPane.CANCEL_OPTION) {
+                // El usuario ha pulsado Cancelar
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione un Servicio");
+        }
+    }//GEN-LAST:event_btn_Agregar1ActionPerformed
+
+    private void btn_AgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AgregarActionPerformed
+
+        Seleccionar_Servicio sS = new Seleccionar_Servicio();
+        sS.setVent_Facturar1(this);
+        sS.setControladorServicio(this.controladorServicio);
+        sS.actulizarTabla();
+        sS.setVisible(true);
+
+
+    }//GEN-LAST:event_btn_AgregarActionPerformed
+
+    public double[] actulizarValores() {
+        double iva = 0, subtotal = 0, total;
+        double[] valores = new double[3];
+        for (Det_Fac_Servicio det : carrito) {
+
+            subtotal += (double) Math.round(det.getSubtotal() * 100) / 100;
+
+            iva += (double) Math.round(det.getIva() * 100) / 100;
+
+        }
+        iva = (double) Math.round(iva * 100) / 100;
+        subtotal = (double) Math.round(subtotal * 100) / 100;
+        total = (double) Math.round((subtotal + iva) * 100) / 100;
+        valores[0] = iva;
+        valores[1] = subtotal;
+        valores[2] = total;
+        lbl_facIva.setText("$" + iva);
+        lbl_facSubtotal.setText("$" + subtotal);
+        lbl_facTotal.setText("$" + total);
+        return valores;
+    }
+
+    public void actualizarTabla() {
+        DefaultTableModel modelo = (DefaultTableModel) tabla_Servicios.getModel();
+
+        modelo.setRowCount(0);
+
+        for (Det_Fac_Servicio det : carrito) {
+            System.out.println(det.toString());
+            Object[] fila = {det.getId(), det.getNombre(), det.getPrecio(), det.getCantidad(), det.getIva(), det.getSubtotal(), det.getTotal()};
+            modelo.addRow(fila);
+        }
+
+        tabla_Servicios.setModel(modelo);
+    }
+
+    public Det_Fac_Servicio buscarServicioenCarrito(int id) {
+        for (Det_Fac_Servicio det : carrito) {
+            if (det.getId() == id) {
+                return det;
+            }
+        }
+        return null;
+    }
+
+    public void ingresarServicio() {
+        if (servicioSeleccionado != null) {
+            Boolean flag1 = false;
+            int cantidad = 0;
+            try {
+                cantidad = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese la cantidad"));
+                flag1 = true;
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Numero Invalido");
+            }
+
+            if (flag1) {
+                Det_Fac_Servicio buscarSer = buscarServicioenCarrito(servicioSeleccionado.getId());
+
+                if (buscarSer == null) {
+                    double subtotal = (double) Math.round((servicioSeleccionado.getPrecio() * cantidad) * 100) / 100;
+                    double iva = 0;
+                    if (servicioSeleccionado.getIva() == 'S') {
+                        iva = (double) Math.round((subtotal * 0.12) * 100) / 100;
+                    }
+                    double total = (double) Math.round((subtotal + iva) * 100) / 100;
+
+                    Det_Fac_Servicio detSer = new Det_Fac_Servicio(servicioSeleccionado.getId(), servicioSeleccionado.getNombre(), iva,
+                            servicioSeleccionado.getPrecio(), cantidad, subtotal, total);
+                    carrito.add(detSer);
+                } else {
+                    int cantidadNueva = buscarSer.getCantidad() + cantidad;
+
+                    double subtotal = (double) Math.round((servicioSeleccionado.getPrecio() * cantidadNueva) * 100) / 100;
+                    double iva = 0;
+                    if (servicioSeleccionado.getIva() == 'S') {
+                        iva = (double) Math.round((subtotal * 0.12) * 100) / 100;
+                    }
+                    double total = (double) Math.round((subtotal + iva) * 100) / 100;
+
+                    buscarSer.setCantidad(cantidadNueva);
+                    buscarSer.setIva(iva);
+                    buscarSer.setSubtotal(subtotal);
+                    buscarSer.setTotal(total);
+
+                }
+                actualizarTabla();
+                actulizarValores();
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione un Servicio");
+        }
+    }
+
+
+    private void btn_CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_CancelarActionPerformed
+        resetear();
+        actualizarTabla();
+    }//GEN-LAST:event_btn_CancelarActionPerformed
+
+    private void lbl_cedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lbl_cedulaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lbl_cedulaActionPerformed
+
+    private void lbl_correoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lbl_correoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lbl_correoActionPerformed
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_Agregar;
+    private javax.swing.JButton btn_Agregar1;
+    private javax.swing.JButton btn_Buscar_Personal;
+    private javax.swing.JButton btn_Cancelar;
+    private javax.swing.JButton btn_CrearFactura;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField lbl_NumFac;
+    private javax.swing.JTextField lbl_Usuario;
+    private javax.swing.JTextField lbl_cedula;
+    private javax.swing.JTextField lbl_correo;
+    private javax.swing.JTextField lbl_facIva;
+    private javax.swing.JTextField lbl_facSubtotal;
+    private javax.swing.JTextField lbl_facTotal;
+    private javax.swing.JTextField lbl_fechaActual;
+    private javax.swing.JTextField lbl_nombre_Cliente;
+    private javax.swing.JTable tabla_Servicios;
+    // End of variables declaration//GEN-END:variables
+}
